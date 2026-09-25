@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **Run-of-river ('S') reservoir range collapses to the reference volume.**
+  Hydro plants with regularization type `'S'` had their storage range collapsed
+  to `volume_minimo`, which is wrong when the reference volume differs from the
+  minimum (e.g. Itaipu, whose reference equals its maximum). Both `'S'` and the
+  already-correct `'D'` now freeze `min_storage_hm3` and `max_storage_hm3` at
+  `volume_referencia`, and the initial-storage seed is anchored to the same
+  point. When `volume_referencia` is absent/NaN the range is left as
+  `[volume_minimo, volume_maximo]` (no collapse) rather than guessed.
+
 ## [0.15.0] - 2026-08-24
 
 Pairs the bridge with the **cobre 0.15.0** release: the `cobre-python` pin and
