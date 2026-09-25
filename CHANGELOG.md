@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **MODIF minimum-outflow (VAZMINT) overrides on the pre/post-study periods.**
+  A `VAZMINT` record — the sole modif.dat record the source model allows to —
+  can mark its period with `PRE` (pre-study) or `POS` (post-study) instead of a
+  numeric year. Those records are now carried through conversion into the
+  per-stage minimum-outflow bound: a `PRE` value seeds the bound at the horizon
+  entry, and a `POS` value sets the post-study tail per calendar month, taking
+  precedence over the freeze extrapolation so a deck whose post-study pattern
+  differs from its last study year converts faithfully. Previously these records
+  aborted the conversion. Requires an inewave that reads the `VAZMINT` year
+  field as text (exposing the period marker).
+
 ## [0.16.0] - 2026-09-22
 
 Pairs the bridge with the **cobre 0.16.0** release: the `cobre-python` pin and
